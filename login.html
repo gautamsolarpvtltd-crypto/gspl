@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Gautam Solar</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 450px;
+      width: 100%;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .logo {
+      width: 80px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 28px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    
+    /* Login Type Switcher */
+    .login-type-switcher {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      background: #f7fafc;
+      padding: 5px;
+      border-radius: 10px;
+    }
+    .type-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      color: #718096;
+      transition: all 0.3s;
+    }
+    .type-btn.active {
+      background: white;
+      color: #667eea;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .type-btn.admin-active {
+      color: #f56565;
+    }
+    .type-btn:hover:not(.active) {
+      color: #667eea;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      color: #555;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    input.admin-focus:focus {
+      border-color: #f56565;
+      box-shadow: 0 0 0 3px rgba(245, 101, 101, 0.1);
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    button.admin-btn {
+      background: #f56565;
+    }
+    button.admin-btn:hover {
+      background: #e53e3e;
+      box-shadow: 0 5px 15px rgba(245, 101, 101, 0.4);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    .links {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .links a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+    .divider {
+      margin: 0 8px;
+      color: #999;
+    }
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+    }
+    .back-link a {
+      color: #718096;
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .back-link a:hover {
+      color: #667eea;
+    }
+    .info-box {
+      background: #edf2f7;
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #4a5568;
+      border-left: 4px solid #667eea;
+    }
+    .admin-notice {
+      background: #fff3cd;
+      border-left-color: #ffc107;
+      color: #856404;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="Gautam Solar" class="logo" onerror="this.style.display='none'">
+    <h2>Welcome Back</h2>
+    <p class="subtitle">Login to access your portal</p>
+    
+    <!-- Login Type Switcher -->
+    <div class="login-type-switcher">
+      <button class="type-btn active" id="userBtn" onclick="switchType('user')">
+        👤 User Login
+      </button>
+      <button class="type-btn" id="adminBtn" onclick="switchType('admin')">
+        👑 Admin Login
+      </button>
+    </div>
+    
+    <!-- User Login Info -->
+    <div class="info-box" id="userInfo">
+      💡 New user? Register first and wait for admin approval to login.
+    </div>
+    
+    <!-- Admin Login Info -->
+    <div class="info-box admin-notice" id="adminInfo" style="display:none;">
+      ⚠️ Authorized personnel only. All access is logged.
+    </div>
+    
+    <!-- Login Form -->
+    <form method="POST" id="loginForm" action="/login">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          placeholder="Enter your email" 
+          required
+          autocomplete="email"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          placeholder="Enter your password" 
+          required
+          autocomplete="current-password"
+        >
+      </div>
+      
+      <button type="submit" id="submitBtn">Login</button>
+    </form>
+    
+    <!-- Links Section -->
+    <div class="links" id="userLinks">
+      <a href="/forgot-password">Forgot Password?</a>
+      <span class="divider">•</span>
+      <a href="/register">Create Account</a>
+    </div>
+    
+    <div class="links" id="adminLinks" style="display:none;">
+      <span style="color:#718096;">Admin access only - No registration available</span>
+    </div>
+    
+    <!-- Back to Home -->
+    <div class="back-link">
+      <a href="/">← Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    let currentType = 'user';
+
+    function switchType(type) {
+      currentType = type;
+      
+      const form = document.getElementById('loginForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const userInfo = document.getElementById('userInfo');
+      const adminInfo = document.getElementById('adminInfo');
+      const userLinks = document.getElementById('userLinks');
+      const adminLinks = document.getElementById('adminLinks');
+      const userBtn = document.getElementById('userBtn');
+      const adminBtn = document.getElementById('adminBtn');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      
+      // Update button states
+      userBtn.classList.remove('active', 'admin-active');
+      adminBtn.classList.remove('active', 'admin-active');
+      
+      if (type === 'admin') {
+        adminBtn.classList.add('active', 'admin-active');
+        form.action = '/admin';
+        submitBtn.textContent = 'Login as Admin';
+        submitBtn.className = 'admin-btn';
+        userInfo.style.display = 'none';
+        adminInfo.style.display = 'block';
+        userLinks.style.display = 'none';
+        adminLinks.style.display = 'block';
+        emailInput.className = 'admin-focus';
+        passwordInput.className = 'admin-focus';
+      } else {
+        userBtn.classList.add('active');
+        form.action = '/login';
+        submitBtn.textContent = 'Login';
+        submitBtn.className = '';
+        userInfo.style.display = 'block';
+        adminInfo.style.display = 'none';
+        userLinks.style.display = 'block';
+        adminLinks.style.display = 'none';
+        emailInput.className = '';
+        passwordInput.className = '';
+      }
+      
+      // Clear form
+      emailInput.value = '';
+      passwordInput.value = '';
+      emailInput.focus();
+    }
+
+    // Form validation
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        e.preventDefault();
+        alert('Please fill in all fields');
+        return false;
+      }
+
+      // Show loading state
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.textContent = 'Logging in...';
+      submitBtn.disabled = true;
+    });
+
+    // Auto-focus email field
+    window.addEventListener('load', function() {
+      document.getElementById('email').focus();
+    });
+  </script>
+</body>
+</html>

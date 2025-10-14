@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Gautam Solar</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f7fafc; min-height: 100vh; }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    h1 { font-size: 24px; font-weight: 600; }
+    .logout-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    .logout-btn:hover { background: rgba(255,255,255,0.3); }
+    .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+    .welcome-box {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+    .welcome-box h2 { color: #333; margin-bottom: 10px; }
+    .section-title { color: #333; font-size: 22px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #667eea; }
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .cert-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      border-left: 4px solid #667eea;
+    }
+    .cert-card:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+    .cert-wp { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 8px; }
+    .cert-type { color: #666; font-size: 14px; margin-bottom: 15px; }
+    .download-btn {
+      display: inline-block;
+      background: #48bb78;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    .download-btn:hover { background: #38a169; }
+    .no-certs { text-align: center; padding: 60px 20px; background: white; border-radius: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-content">
+      <h1>Gautam Solar Portal</h1>
+      <div>
+        <span>Welcome, {{ user_name }}</span>
+        <a href="/logout" class="logout-btn">Logout</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="welcome-box">
+      <h2>📋 Certificate Dashboard</h2>
+      <p>Access and download your solar module certificates</p>
+    </div>
+
+    <h3 class="section-title">Available Certificates</h3>
+    
+    {% if certs %}
+    <div class="cert-grid">
+      {% for c in certs %}
+      <div class="cert-card">
+        <div class="cert-wp">{{ c.wp }}</div>
+        <div class="cert-type">{{ c.module_type }}</div>
+        <a href="{{ c.drive_link }}" target="_blank" class="download-btn">
+          📥 Download {{ c.cert_name }}
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-certs">
+      <h3>No Certificates Available</h3>
+      <p>Certificates will appear here once added by admin</p>
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>

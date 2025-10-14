@@ -1,0 +1,9 @@
+
+IMPORTANT: Make sure your app.py has this route:
+
+@app.route('/assets/<path:filename>')
+def serve_assets(filename):
+    return send_from_directory('assets', filename)
+
+Add this import at top:
+from flask import send_from_directory

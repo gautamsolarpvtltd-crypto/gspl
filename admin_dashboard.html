@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Gautam Solar</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: #f7fafc;
+      min-height: 100vh;
+    }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #f56565 0%, #ed8936 100%);
+      color: white;
+      padding: 20px 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    h1 { 
+      font-size: 24px; 
+      font-weight: 700;
+    }
+    .admin-badge {
+      background: rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+    
+    /* Navigation */
+    .nav-links { 
+      display: flex; 
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      background: rgba(255,255,255,0.1);
+    }
+    .nav-links a:hover { 
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-2px);
+    }
+    
+    /* Container */
+    .container { 
+      max-width: 1400px; 
+      margin: 30px auto; 
+      padding: 0 20px; 
+    }
+    
+    /* Welcome Card */
+    .welcome-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 40px rgba(102,126,234,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .welcome-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+    .welcome-card h2 { 
+      font-size: 32px; 
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .welcome-card p {
+      font-size: 16px;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+    .stat-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: all 0.3s;
+      border-left: 4px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    .stat-card.users { border-left-color: #667eea; }
+    .stat-card.approved { border-left-color: #48bb78; }
+    .stat-card.categories { border-left-color: #f56565; }
+    .stat-card.products { border-left-color: #ed8936; }
+    
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(102,126,234,0.2));
+    }
+    .stat-card.users .stat-icon { background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(102,126,234,0.2)); }
+    .stat-card.approved .stat-icon { background: linear-gradient(135deg, rgba(72,187,120,0.1), rgba(72,187,120,0.2)); }
+    .stat-card.categories .stat-icon { background: linear-gradient(135deg, rgba(245,101,101,0.1), rgba(245,101,101,0.2)); }
+    .stat-card.products .stat-icon { background: linear-gradient(135deg, rgba(237,137,54,0.1), rgba(237,137,54,0.2)); }
+    
+    .stat-info { flex: 1; }
+    .stat-label {
+      font-size: 14px;
+      color: #718096;
+      margin-bottom: 8px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stat-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: #2d3748;
+      line-height: 1;
+    }
+    .stat-change {
+      font-size: 13px;
+      color: #48bb78;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+    
+    /* Quick Actions */
+    .quick-actions {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
+    .quick-actions h3 {
+      font-size: 22px;
+      margin-bottom: 25px;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      padding: 25px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+      text-align: center;
+    }
+    .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+    }
+    .action-icon {
+      font-size: 36px;
+      background: rgba(255,255,255,0.2);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Recent Activity */
+    .activity-section {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .activity-section h3 {
+      font-size: 22px;
+      margin-bottom: 25px;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: #f7fafc;
+      border-radius: 10px;
+      border-left: 3px solid #667eea;
+    }
+    .activity-icon {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+    }
+    .activity-content {
+      flex: 1;
+    }
+    .activity-title {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 3px;
+    }
+    .activity-time {
+      font-size: 13px;
+      color: #718096;
+    }
+    
+    /* Guide Section */
+    .guide-section {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-top: 30px;
+    }
+    .guide-section h3 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #2d3748;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .guide-steps {
+      display: grid;
+      gap: 15px;
+    }
+    .guide-step {
+      display: flex;
+      align-items: start;
+      gap: 15px;
+      padding: 20px;
+      background: #f7fafc;
+      border-radius: 10px;
+      border-left: 3px solid #48bb78;
+    }
+    .step-number {
+      width: 35px;
+      height: 35px;
+      background: linear-gradient(135deg, #48bb78, #38a169);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-content {
+      flex: 1;
+    }
+    .step-title {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 5px;
+    }
+    .step-desc {
+      font-size: 14px;
+      color: #718096;
+      line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .actions-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        flex-direction: column;
+        width: 100%;
+      }
+      .nav-links a {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo">🌞</div>
+        <div>
+          <h1>Admin Dashboard <span class="admin-badge">👑 ADMIN</span></h1>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="/admin/certificates">📋 Certificates</a>
+        <a href="/admin/users">👥 Users</a>
+        <a href="/admin/company-docs">🏢 Company Docs</a>
+        <a href="/portal" target="_blank">🌐 View Portal</a>
+        <a href="/admin/logout">🚪 Logout</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="welcome-card">
+      <h2>👋 Welcome Back, Admin!</h2>
+      <p>Manage your solar certificate portal from here. Everything is under control.</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card users">
+        <div class="stat-icon">👥</div>
+        <div class="stat-info">
+          <div class="stat-label">Total Users</div>
+          <div class="stat-value">{{ users_count }}</div>
+          <div class="stat-change">📈 All registered users</div>
+        </div>
+      </div>
+
+      <div class="stat-card approved">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+          <div class="stat-label">Approved Users</div>
+          <div class="stat-value">{{ approved_count }}</div>
+          <div class="stat-change">🎯 Active accounts</div>
+        </div>
+      </div>
+
+      <div class="stat-card categories">
+        <div class="stat-icon">📦</div>
+        <div class="stat-info">
+          <div class="stat-label">Categories</div>
+          <div class="stat-value">{{ categories_count }}</div>
+          <div class="stat-change">📂 Product groups</div>
+        </div>
+      </div>
+
+      <div class="stat-card products">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-info">
+          <div class="stat-label">Total Products</div>
+          <div class="stat-value">{{ products_count }}</div>
+          <div class="stat-change">🔋 All variants</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <h3>⚡ Quick Actions</h3>
+      <div class="actions-grid">
+        <a href="/admin/certificates" class="action-btn">
+          <div class="action-icon">📋</div>
+          <span>Manage Certificates</span>
+        </a>
+        <a href="/admin/users" class="action-btn">
+          <div class="action-icon">👥</div>
+          <span>Manage Users</span>
+        </a>
+        <a href="/admin/company-docs" class="action-btn">
+          <div class="action-icon">🏢</div>
+          <span>Company Documents</span>
+        </a>
+        <a href="/portal" target="_blank" class="action-btn">
+          <div class="action-icon">🌐</div>
+          <span>View Public Portal</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <h3>📖 Quick Start Guide</h3>
+      <div class="guide-steps">
+        <div class="guide-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <div class="step-title">Approve Users</div>
+            <div class="step-desc">Go to Users page → Click "Approve" for pending registrations</div>
+          </div>
+        </div>
+        
+        <div class="guide-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <div class="step-title">Add Product Categories</div>
+            <div class="step-desc">Certificates → Add Category (e.g., "Mono PERC M10")</div>
+          </div>
+        </div>
+        
+        <div class="guide-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <div class="step-title">Add Products & Documents</div>
+            <div class="step-desc">Add wattage variants → Upload certificates (Datasheet, BIS, IEC, etc.)</div>
+          </div>
+        </div>
+        
+        <div class="guide-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <div class="step-title">Upload Company Documents</div>
+            <div class="step-desc">Company Docs → Add GST, Incorporation, Bank certificates</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    console.log('✅ Admin Dashboard loaded');
+    console.log('Stats:', {
+      users: {{ users_count }},
+      approved: {{ approved_count }},
+      categories: {{ categories_count }},
+      products: {{ products_count }}
+    });
+  </script>
+</body>
+</html>

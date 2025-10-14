@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Gautam Solar</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 500px;
+      width: 100%;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .logo {
+      width: 80px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 28px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+    .info-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #856404;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      color: #555;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    label .required {
+      color: #f56565;
+      font-weight: 700;
+    }
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    input:invalid:not(:placeholder-shown) {
+      border-color: #f56565;
+    }
+    input:valid:not(:placeholder-shown) {
+      border-color: #48bb78;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #48bb78;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #38a169;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    button:disabled {
+      background: #a0aec0;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .links {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .links a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .back-link a {
+      color: #718096;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .back-link a:hover {
+      color: #667eea;
+    }
+    .password-strength {
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 2px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    .password-strength-bar {
+      height: 100%;
+      width: 0;
+      transition: all 0.3s ease;
+    }
+    .strength-weak { background: #f56565; width: 33%; }
+    .strength-medium { background: #ffc107; width: 66%; }
+    .strength-strong { background: #48bb78; width: 100%; }
+    .password-hint {
+      font-size: 12px;
+      color: #718096;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="Gautam Solar" class="logo" onerror="this.style.display='none'">
+    <h2>Create Account</h2>
+    <p class="subtitle">Register to access certificate portal</p>
+    
+    <div class="info-box">
+      ℹ️ Your account will be reviewed by admin before activation (24-48 hours)
+    </div>
+    
+    <form method="POST" id="registerForm">
+      <div class="form-group">
+        <label for="name">Full Name <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          placeholder="Enter your full name" 
+          required
+          minlength="3"
+          autocomplete="name"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email Address <span class="required">*</span></label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          placeholder="Enter your email" 
+          required
+          autocomplete="email"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="company">Company Name</label>
+        <input 
+          type="text" 
+          id="company" 
+          name="company" 
+          placeholder="Enter company name (optional)"
+          autocomplete="organization"
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="mobile">Mobile Number</label>
+        <input 
+          type="tel" 
+          id="mobile" 
+          name="mobile" 
+          placeholder="Enter mobile number (optional)"
+          pattern="[0-9]{10}"
+          autocomplete="tel"
+        >
+        <div class="password-hint">10 digits without country code</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password <span class="required">*</span></label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          placeholder="Create a strong password" 
+          required
+          minlength="6"
+          autocomplete="new-password"
+        >
+        <div class="password-strength">
+          <div class="password-strength-bar" id="strengthBar"></div>
+        </div>
+        <div class="password-hint" id="strengthText">Minimum 6 characters</div>
+      </div>
+      
+      <button type="submit" id="submitBtn">Create Account</button>
+    </form>
+    
+    <div class="links">
+      Already have an account? <a href="/login">Login here</a>
+    </div>
+    
+    <div class="back-link">
+      <a href="/">← Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    // Password strength checker
+    const passwordInput = document.getElementById('password');
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthText = document.getElementById('strengthText');
+
+    passwordInput.addEventListener('input', function() {
+      const password = this.value;
+      let strength = 0;
+      
+      if (password.length >= 6) strength++;
+      if (password.length >= 10) strength++;
+      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^a-zA-Z0-9]/.test(password)) strength++;
+      
+      strengthBar.className = 'password-strength-bar';
+      
+      if (strength <= 2) {
+        strengthBar.classList.add('strength-weak');
+        strengthText.textContent = 'Weak password';
+        strengthText.style.color = '#f56565';
+      } else if (strength <= 3) {
+        strengthBar.classList.add('strength-medium');
+        strengthText.textContent = 'Medium strength';
+        strengthText.style.color = '#ffc107';
+      } else {
+        strengthBar.classList.add('strength-strong');
+        strengthText.textContent = 'Strong password!';
+        strengthText.style.color = '#48bb78';
+      }
+      
+      if (password.length === 0) {
+        strengthBar.style.width = '0';
+        strengthText.textContent = 'Minimum 6 characters';
+        strengthText.style.color = '#718096';
+      }
+    });
+
+    // Form validation
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const mobile = document.getElementById('mobile').value.trim();
+
+      // Validate name
+      if (name.length < 3) {
+        e.preventDefault();
+        alert('Name must be at least 3 characters long');
+        return false;
+      }
+
+      // Validate email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        e.preventDefault();
+        alert('Please enter a valid email address');
+        return false;
+      }
+
+      // Validate password
+      if (password.length < 6) {
+        e.preventDefault();
+        alert('Password must be at least 6 characters long');
+        return false;
+      }
+
+      // Validate mobile (if provided)
+      if (mobile && !/^[0-9]{10}$/.test(mobile)) {
+        e.preventDefault();
+        alert('Mobile number must be exactly 10 digits');
+        return false;
+      }
+
+      // Show loading state
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.textContent = 'Creating Account...';
+      submitBtn.disabled = true;
+      
+      return true;
+    });
+
+    // Auto-focus name field
+    window.addEventListener('load', function() {
+      document.getElementById('name').focus();
+    });
+
+    console.log('✅ Register page loaded');
+  </script>
+</body>
+</html>

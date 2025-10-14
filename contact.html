@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Gautam Solar</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7fafc;
+      line-height: 1.6;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-menu {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    .nav-menu a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .hero-section {
+      background: white;
+      padding: 60px 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .hero-section h1 {
+      font-size: 42px;
+      color: #2d3748;
+      margin-bottom: 20px;
+    }
+    .hero-section .subtitle {
+      font-size: 20px;
+      color: #667eea;
+      font-weight: 600;
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .contact-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.12);
+    }
+    .contact-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    .contact-title {
+      font-size: 20px;
+      color: #2d3748;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    .contact-info {
+      color: #4a5568;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    .contact-info a {
+      color: #667eea;
+      text-decoration: none;
+    }
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+    
+    .location-section {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
+    .location-section h2 {
+      font-size: 28px;
+      color: #2d3748;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .location-box {
+      background: #f7fafc;
+      padding: 25px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border-left: 4px solid #667eea;
+    }
+    .location-box.unit1 {
+      border-left-color: #48bb78;
+    }
+    .location-box.unit2 {
+      border-left-color: #ed8936;
+    }
+    .location-box h3 {
+      color: #667eea;
+      margin-bottom: 15px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .location-box.unit1 h3 {
+      color: #48bb78;
+    }
+    .location-box.unit2 h3 {
+      color: #ed8936;
+    }
+    .location-box p {
+      color: #4a5568;
+      margin-bottom: 8px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .location-box p strong {
+      color: #2d3748;
+      display: inline-block;
+      min-width: 100px;
+    }
+    
+    .back-link {
+      text-align: center;
+      margin: 40px 0;
+    }
+    .back-link a {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #667eea;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .back-link a:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+    }
+    
+    @media (max-width: 768px) {
+      .hero-section h1 { font-size: 32px; }
+      .nav-menu { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-content">
+      <div class="logo">
+        🌞 GAUTAM SOLAR
+      </div>
+      <div class="nav-menu">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/portal">Portal</a>
+        <a href="/login">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="hero-section">
+      <h1>Contact Us</h1>
+      <p class="subtitle">Get in touch with our team</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <div class="contact-title">Email</div>
+        <div class="contact-info">
+          <a href="mailto:testing@gautamsolar.com">testing@gautamsolar.com</a>
+        </div>
+      </div>
+      
+      <div class="contact-card">
+        <div class="contact-icon">📱</div>
+        <div class="contact-title">Phone</div>
+        <div class="contact-info">
+          <a href="tel:+919599817214">+91 95998 17214</a><br>
+          <strong>Sonu Panchal</strong>
+        </div>
+      </div>
+      
+      <div class="contact-card">
+        <div class="contact-icon">🌐</div>
+        <div class="contact-title">Website</div>
+        <div class="contact-info">
+          <a href="http://www.gautamsolar.com" target="_blank">www.gautamsolar.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="location-section">
+      <h2>📍 Our Offices</h2>
+      
+      <div class="location-box">
+        <h3>🏢 Head Office</h3>
+        <p><strong>Address:</strong> D 120-121 Okhla Industrial Area, Phase-1, New Delhi 110020</p>
+        <p><strong>GST No:</strong> 07AAFCG5884Q2ZP</p>
+      </div>
+      
+      <div class="location-box unit1">
+        <h3>🏭 Unit 1 - Haridwar</h3>
+        <p><strong>Address:</strong> Plot No-67-70, SECTOR 8A, SIDCUL, IIE RANIPUR, HARIDWAR, UTTARAKHAND, 249403</p>
+        <p><strong>GST No:</strong> 05AAFCG5884Q1ZU</p>
+      </div>
+      
+      <div class="location-box unit2">
+        <h3>🏭 Unit 2 - Bhiwani</h3>
+        <p><strong>Address:</strong> 7KM Milestone, Tosham Road, Dist. Bhiwani, Bawani Khera, Bhiwani, Haryana, 127032</p>
+        <p><strong>GST No:</strong> 06AAFCG5884Q1ZS</p>
+      </div>
+    </div>
+
+    <div class="back-link">
+      <a href="/">← Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>

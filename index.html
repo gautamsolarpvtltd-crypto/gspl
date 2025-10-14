@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gautam Solar | Leading Solar Panel Manufacturer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    
+    /* Header */
+    .header {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-menu {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    .nav-menu a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .nav-menu .login-btn {
+      background: white;
+      color: #667eea;
+      font-weight: 600;
+    }
+    .nav-menu .login-btn:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+    
+    /* Hero Section */
+    .hero {
+      padding-top: 100px;
+      padding-bottom: 40px;
+      text-align: center;
+      color: white;
+    }
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      opacity: 0.95;
+    }
+    
+    /* Notification Carousel */
+    .notification-carousel {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+    .notification-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      text-align: center;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+    .notification-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+    .notification-title {
+      font-size: 24px;
+      color: #2d3748;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .notification-desc {
+      color: #718096;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .carousel-dot.active {
+      background: white;
+      width: 30px;
+      border-radius: 6px;
+    }
+    
+    /* CTA Buttons */
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 15px 35px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    .cta-primary {
+      background: white;
+      color: #667eea;
+    }
+    .cta-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+    }
+    .cta-secondary {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 2px solid white;
+    }
+    .cta-secondary:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    /* Footer */
+    .footer {
+      background: rgba(0,0,0,0.2);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+    }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      .nav-menu { display: none; }
+      .notification-title { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Navigation -->
+  <div class="header">
+    <div class="header-content">
+      <div class="logo">
+        🌞 GAUTAM SOLAR
+      </div>
+      <div class="nav-menu">
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/portal">Portal</a>
+        <a href="/login" class="login-btn">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Premium Solar Solutions for Your Energy Needs</h1>
+      <p>Gautam Solar - India's Leading Solar Panel Manufacturer</p>
+      
+      <!-- Notification Carousel -->
+      <div class="notification-carousel">
+        <div class="notification-card" id="notificationCard">
+          <div class="notification-icon">🔔</div>
+          <div class="notification-title">Welcome to Gautam Solar</div>
+          <div class="notification-desc">Check back soon for the latest product updates and announcements</div>
+        </div>
+        <div class="carousel-controls" id="carouselDots"></div>
+      </div>
+      
+      <!-- CTA Buttons -->
+      <div class="cta-buttons">
+        <a href="/portal" class="cta-btn cta-primary">View Certificates</a>
+        <a href="/register" class="cta-btn cta-secondary">Register Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2025 Gautam Solar Pvt. Ltd. All rights reserved.</p>
+    <p>D 120-121 Okhla Industrial Area, Phase-1, New Delhi 110020</p>
+  </div>
+
+  <script>
+    let notifications = [
+      {
+        icon: '🔔',
+        title: 'Welcome to Gautam Solar',
+        desc: 'Check back soon for the latest product updates and announcements'
+      }
+    ];
+
+    let currentSlide = 0;
+
+    async function loadNotifications() {
+      try {
+        const res = await fetch('/api/notifications');
+        const data = await res.json();
+        if (data && data.length > 0) {
+          notifications = data.map(n => ({
+            icon: n.type === 'product_available' ? '🎉' : n.type === 'announcement' ? '📢' : '🔔',
+            title: n.title,
+            desc: n.description
+          }));
+          showSlide(0);
+          createDots();
+        }
+      } catch (e) {
+        console.log('Using default notification');
+      }
+    }
+
+    function showSlide(index) {
+      const card = document.getElementById('notificationCard');
+      const notif = notifications[index];
+      
+      card.style.opacity = '0';
+      setTimeout(() => {
+        card.innerHTML = `
+          <div class="notification-icon">${notif.icon}</div>
+          <div class="notification-title">${notif.title}</div>
+          <div class="notification-desc">${notif.desc}</div>
+        `;
+        card.style.opacity = '1';
+      }, 300);
+      
+      updateDots(index);
+    }
+
+    function createDots() {
+      const dotsContainer = document.getElementById('carouselDots');
+      dotsContainer.innerHTML = '';
+      
+      if (notifications.length > 1) {
+        notifications.forEach((_, index) => {
+          const dot = document.createElement('div');
+          dot.className = 'carousel-dot';
+          if (index === 0) dot.classList.add('active');
+          dot.onclick = () => {
+            currentSlide = index;
+            showSlide(index);
+          };
+          dotsContainer.appendChild(dot);
+        });
+      }
+    }
+
+    function updateDots(activeIndex) {
+      const dots = document.querySelectorAll('.carousel-dot');
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === activeIndex);
+      });
+    }
+
+    function autoRotate() {
+      if (notifications.length > 1) {
+        currentSlide = (currentSlide + 1) % notifications.length;
+        showSlide(currentSlide);
+      }
+    }
+
+    loadNotifications();
+    createDots();
+    setInterval(autoRotate, 5000);
+  </script>
+</body>
+</html>

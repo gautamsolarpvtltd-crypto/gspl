@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Company Documents</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .add-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .add-section h3 {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .custom-name-group {
+            display: none;
+            margin-top: 10px;
+        }
+        
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            background: #218838;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .docs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .docs-table th,
+        .docs-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .docs-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .docs-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .location-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background: #007bff;
+            color: white;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/admin/dashboard" class="back-link">← Back to Dashboard</a>
+        <h1>🏢 Company Documents Management</h1>
+        
+        <div id="message"></div>
+        
+        <!-- Add Company Document -->
+        <div class="add-section">
+            <h3>➕ Add New Company Document</h3>
+            <form id="addDocForm">
+                <div class="form-group">
+                    <label>Location/Factory:</label>
+                    <select name="location" required>
+                        <option value="">Select Location</option>
+                        <option value="Haridwar">Haridwar</option>
+                        <option value="Bhiwani">Bhiwani</option>
+                        <option value="Head Office">Head Office</option>
+                        <option value="Other">Other Location</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Document Type:</label>
+                    <select name="doc_type" onchange="toggleCustomName(this)" required>
+                        <option value="">Select Type</option>
+                        <option value="ISO Certificate">ISO Certificate</option>
+                        <option value="Factory License">Factory License</option>
+                        <option value="Environmental Clearance">Environmental Clearance</option>
+                        <option value="Quality Certificate">Quality Certificate</option>
+                        <option value="Registration Certificate">Registration Certificate</option>
+                        <option value="Other">Other (Custom Name)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group custom-name-group">
+                    <label>Custom Document Name:</label>
+                    <input type="text" name="doc_name" placeholder="Enter custom document type name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Download Link (Google Drive or any link):</label>
+                    <input type="url" name="download_link" placeholder="https://drive.google.com/file/d/..." required>
+                    <small style="color: #6c757d;">Note: Customers will not see the actual link, only a download button</small>
+                </div>
+                
+                <button type="submit" class="btn">Add Document</button>
+            </form>
+        </div>
+        
+        <!-- Documents List -->
+        <h2 style="margin-bottom: 20px;">📄 Existing Documents</h2>
+        
+        {% if docs %}
+        <table class="docs-table">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Document Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in docs %}
+                <tr data-doc-id="{{ doc.id }}">
+                    <td><span class="location-badge">{{ doc.location }}</span></td>
+                    <td>{{ doc.doc_name or doc.doc_type }}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteDoc({{ doc.id }})">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="color: #6c757d; text-align: center; padding: 40px;">No company documents added yet</p>
+        {% endif %}
+    </div>
+    
+    <script>
+        function showMessage(message, type = 'success') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = `<div class="${type}">${message}</div>`;
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 3000);
+        }
+        
+        function toggleCustomName(selectElement) {
+            const form = selectElement.closest('form');
+            const customNameGroup = form.querySelector('.custom-name-group');
+            const customNameInput = customNameGroup.querySelector('input[name="doc_name"]');
+            
+            if (selectElement.value === 'Other') {
+                customNameGroup.style.display = 'block';
+                customNameInput.required = true;
+            } else {
+                customNameGroup.style.display = 'none';
+                customNameInput.required = false;
+                customNameInput.value = '';
+            }
+        }
+        
+        // Add Company Document
+        document.getElementById('addDocForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch('/admin/company-doc/add', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Company document added successfully!');
+                    setTimeout(() => location.reload(), 1000);
+                } else {
+                    showMessage(data.error || 'Error adding document', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        });
+        
+        // Delete Company Document
+        async function deleteDoc(id) {
+            if (!confirm('Are you sure you want to delete this document?')) return;
+            
+            try {
+                const response = await fetch(`/admin/company-doc/${id}/delete`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Document deleted successfully!');
+                    document.querySelector(`tr[data-doc-id="${id}"]`).remove();
+                } else {
+                    showMessage(data.error || 'Error deleting document', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>

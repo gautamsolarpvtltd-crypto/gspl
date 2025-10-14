@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Certificates Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .add-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .add-section h3 {
+            margin-bottom: 15px;
+            color: #495057;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .custom-name-group {
+            display: none;
+            margin-top: 10px;
+        }
+        
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn:hover {
+            background: #218838;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #000;
+        }
+        
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+        
+        .category-section {
+            margin-bottom: 40px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+        }
+        
+        .category-title {
+            font-size: 24px;
+            color: #007bff;
+        }
+        
+        .product-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .product-wattage {
+            font-size: 18px;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .availability-selector {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .document-list {
+            list-style: none;
+            padding-left: 20px;
+        }
+        
+        .document-item {
+            padding: 8px;
+            margin-bottom: 5px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .document-name {
+            color: #495057;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/admin/dashboard" class="back-link">← Back to Dashboard</a>
+        <h1>📜 Certificates Management</h1>
+        
+        <div id="message"></div>
+        
+        <!-- Add Category -->
+        <div class="add-section">
+            <h3>➕ Add New Category</h3>
+            <form id="addCategoryForm">
+                <div class="form-group">
+                    <label>Category Name:</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea name="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Display Order:</label>
+                    <input type="number" name="order" value="0">
+                </div>
+                <button type="submit" class="btn">Add Category</button>
+            </form>
+        </div>
+        
+        <!-- Categories List -->
+        <div id="categoriesList">
+            {% for category in categories %}
+            <div class="category-section" data-category-id="{{ category.id }}">
+                <div class="category-header">
+                    <h2 class="category-title">{{ category.name }}</h2>
+                    <button class="btn btn-danger" onclick="deleteCategory({{ category.id }})">Delete Category</button>
+                </div>
+                
+                {% if category.description %}
+                <p style="color: #6c757d; margin-bottom: 20px;">{{ category.description }}</p>
+                {% endif %}
+                
+                <!-- Add Product Form -->
+                <div class="add-section">
+                    <h3>Add Product to {{ category.name }}</h3>
+                    <form class="addProductForm" data-category-id="{{ category.id }}">
+                        <div class="form-group">
+                            <label>Wattage:</label>
+                            <input type="text" name="wattage" placeholder="e.g., 540 Wp" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Availability Status:</label>
+                            <select name="availability" required>
+                                <option value="available">✓ In Stock (Green)</option>
+                                <option value="limited">⚠ Limited Stock (Yellow)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Display Order:</label>
+                            <input type="number" name="order" value="0">
+                        </div>
+                        <button type="submit" class="btn">Add Product</button>
+                    </form>
+                </div>
+                
+                <!-- Products List -->
+                <div class="products-list">
+                    {% for product in category.products %}
+                    <div class="product-card" data-product-id="{{ product.id }}">
+                        <div class="product-header">
+                            <span class="product-wattage">⚡ {{ product.wattage }}</span>
+                            <div class="action-buttons">
+                                <select class="availability-selector" onchange="updateAvailability({{ product.id }}, this.value)">
+                                    <option value="available" {% if product.availability == 'available' %}selected{% endif %}>✓ In Stock</option>
+                                    <option value="limited" {% if product.availability == 'limited' %}selected{% endif %}>⚠ Limited Stock</option>
+                                </select>
+                                <button class="btn btn-danger" onclick="deleteProduct({{ product.id }})">Delete</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Add Document Form -->
+                        <div class="add-section" style="margin-top: 15px;">
+                            <form class="addDocumentForm" data-product-id="{{ product.id }}">
+                                <div class="form-group">
+                                    <label>Document Type:</label>
+                                    <select name="doc_type" onchange="toggleCustomName(this)" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Datasheet">Datasheet</option>
+                                        <option value="BIS Certificate">BIS Certificate</option>
+                                        <option value="ISO Certificate">ISO Certificate</option>
+                                        <option value="Test Report">Test Report</option>
+                                        <option value="Warranty Document">Warranty Document</option>
+                                        <option value="Other">Other (Custom Name)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group custom-name-group">
+                                    <label>Custom Document Name:</label>
+                                    <input type="text" name="doc_name" placeholder="Enter custom document type name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Download Link (Google Drive or any link):</label>
+                                    <input type="url" name="download_link" placeholder="https://drive.google.com/file/d/..." required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Display Order:</label>
+                                    <input type="number" name="order" value="0">
+                                </div>
+                                <button type="submit" class="btn">Add Document</button>
+                            </form>
+                        </div>
+                        
+                        <!-- Documents List -->
+                        {% if product.documents %}
+                        <ul class="document-list">
+                            {% for doc in product.documents %}
+                            <li class="document-item" data-document-id="{{ doc.id }}">
+                                <span class="document-name">
+                                    📄 {{ doc.doc_name or doc.doc_type }}
+                                    {% if doc.doc_name %}<small>({{ doc.doc_type }})</small>{% endif %}
+                                </span>
+                                <button class="btn btn-danger" onclick="deleteDocument({{ doc.id }})">Delete</button>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p style="color: #6c757d; font-style: italic;">No documents added yet</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <script>
+        function showMessage(message, type = 'success') {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = `<div class="${type}">${message}</div>`;
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 3000);
+        }
+        
+        function toggleCustomName(selectElement) {
+            const customNameGroup = selectElement.closest('form').querySelector('.custom-name-group');
+            const customNameInput = customNameGroup.querySelector('input[name="doc_name"]');
+            
+            if (selectElement.value === 'Other') {
+                customNameGroup.style.display = 'block';
+                customNameInput.required = true;
+            } else {
+                customNameGroup.style.display = 'none';
+                customNameInput.required = false;
+                customNameInput.value = '';
+            }
+        }
+        
+        // Add Category
+        document.getElementById('addCategoryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            try {
+                const response = await fetch('/admin/category/add', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Category added successfully!');
+                    location.reload();
+                } else {
+                    showMessage(data.error || 'Error adding category', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        });
+        
+        // Add Product
+        document.querySelectorAll('.addProductForm').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                formData.append('category_id', e.target.dataset.categoryId);
+                
+                try {
+                    const response = await fetch('/admin/product/add', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        showMessage('Product added successfully!');
+                        location.reload();
+                    } else {
+                        showMessage(data.error || 'Error adding product', 'error');
+                    }
+                } catch (error) {
+                    showMessage('Error: ' + error.message, 'error');
+                }
+            });
+        });
+        
+        // Add Document
+        document.querySelectorAll('.addDocumentForm').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                formData.append('product_id', e.target.dataset.productId);
+                
+                try {
+                    const response = await fetch('/admin/document/add', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        showMessage('Document added successfully!');
+                        location.reload();
+                    } else {
+                        showMessage(data.error || 'Error adding document', 'error');
+                    }
+                } catch (error) {
+                    showMessage('Error: ' + error.message, 'error');
+                }
+            });
+        });
+        
+        // Update Availability
+        async function updateAvailability(productId, availability) {
+            const formData = new FormData();
+            formData.append('availability', availability);
+            
+            try {
+                const response = await fetch(`/admin/product/${productId}/update-availability`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Availability updated!');
+                } else {
+                    showMessage(data.error || 'Error updating availability', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+        
+        // Delete Functions
+        async function deleteCategory(id) {
+            if (!confirm('Delete this category and all its products?')) return;
+            
+            try {
+                const response = await fetch(`/admin/category/${id}/delete`, { method: 'POST' });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Category deleted!');
+                    location.reload();
+                } else {
+                    showMessage(data.error || 'Error deleting category', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+        
+        async function deleteProduct(id) {
+            if (!confirm('Delete this product and all its documents?')) return;
+            
+            try {
+                const response = await fetch(`/admin/product/${id}/delete`, { method: 'POST' });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Product deleted!');
+                    location.reload();
+                } else {
+                    showMessage(data.error || 'Error deleting product', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+        
+        async function deleteDocument(id) {
+            if (!confirm('Delete this document?')) return;
+            
+            try {
+                const response = await fetch(`/admin/document/${id}/delete`, { method: 'POST' });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Document deleted!');
+                    location.reload();
+                } else {
+                    showMessage(data.error || 'Error deleting document', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
